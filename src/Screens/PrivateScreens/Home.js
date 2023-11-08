@@ -2,11 +2,12 @@ import React from 'react'
 import { styled } from "styled-components/native"
 import { useGetCurrentUserQuery } from '../../Redux/Services/api'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { mScale, vScale, COLORS } from '../../Utilities';
+import { mScale, vScale, COLORS, clearAsyncStorage } from '../../Utilities';
 import { ActivityIndicator } from "react-native"
 import { Button } from '../../Ui_elements';
 import { useDispatch } from 'react-redux';
 import { configUser } from '../../Redux/Reducers';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export const Home = () => {
     const insets = useSafeAreaInsets()
     const { data, isLoading } = useGetCurrentUserQuery()
@@ -22,12 +23,27 @@ export const Home = () => {
         </LoaderContainer>
     }
 
-    const logout = () => {
+    const logout = async () => {
         dispatch(configUser({
             token: null,
-            onboard:false
-        }))
+            onboard: true
+        }));
+    
+        try {
+            await AsyncStorage.clear();
+            // Clearing successful
+            console.log('AsyncStorage cleared successfully');
+        } catch (e) {
+            // Error clearing AsyncStorage
+            console.error('Error clearing AsyncStorage:', e);
+        }
     }
+    
+    
+    
+    
+    
+    
 
     return (
         <Container
@@ -56,7 +72,7 @@ const Container = styled.View`
   flex:1;
     background-color: ${({ color }) => color.white};
     padding-top: ${({ insets }) => insets.top}px;
-    gap: 30%;
+    gap: ${vScale(40)}px; 
     align-items: center;
     justify-content: center;
     padding-horizontal: ${mScale(40)}px;
@@ -65,12 +81,12 @@ const Container = styled.View`
 const Image = styled.Image`
     width: ${mScale(170)}px;
     height: ${mScale(170)}px;
-    border-radius: 100%;
+    border-radius: ${mScale(100)}px;
     text-align: center;
 `
 
 const DetailContainer = styled.View`
-    margin-top: ${vScale(5)}px;
+    /* margin-top: ${vScale(5)}px; */
 `
 
 const Name = styled.Text`

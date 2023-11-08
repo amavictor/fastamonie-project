@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styled } from 'styled-components/native';
-import { View } from "react-native"
+import { Keyboard, View, TouchableWithoutFeedback, ScrollView } from "react-native"
 import { TextField, Button } from '../../Ui_elements';
 import { COLORS, mScale, nScale, vScale } from '../../Utilities';
 import { EvilIcons } from '@expo/vector-icons';
@@ -68,99 +68,105 @@ export const CreateAccountScreen = () => {
 
 
     return (
-        <Container
-            insets={insets}
-            color={COLORS}
-        >
-            <KeyboardArea
-                behavior='padding'
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            <Container
+                insets={insets}
+                color={COLORS}
             >
-                <TitleView>
-                    <TextTitle>Create user</TextTitle>
-                    <Text>Hello, go ahead and create a user.</Text>
-                </TitleView>
-
-
-                <View
-                    style={{
-                        height: "auto",
-                        width: "auto",
-                        alignSelf: "center",
-                        marginTop: vScale(20)
-                    }}
+                <KeyboardArea
+                    behavior='position'
                 >
-                    <LottieView
+                    <TitleView>
+                        <TextTitle>Create user</TextTitle>
+                        <Text>Hello, go ahead and create a user.</Text>
+                    </TitleView>
+
+
+                    <View
                         style={{
-                            width: mScale(200),
-                            height: mScale(200),
-                            backgroundColor: '#eee',
+                            height: "auto",
+                            width: "auto",
+                            alignSelf: "center",
+                            marginTop: vScale(20)
                         }}
-                        source={require("../../../user.json")}
-                        autoPlay
-                    // loop
-                    />
-                </View>
+                    >
+                        <LottieView
+                            style={{
+                                width: mScale(200),
+                                height: mScale(200),
+                                backgroundColor: '#eee',
+                            }}
+                            source={require("../../../user.json")}
+                            autoPlay
+                        // loop
+                        />
+                    </View>
 
-                <InputContainer>
-                    <Controller
-                        name="name"
-                        control={control}
-                        render={({ field }) =>
-                            <TextField
-                                {...field}
-                                icon={() => <EvilIcons
-                                    name='user'
-                                    size={mScale(25)}
-                                    color="black"
-                                />}
-                                error={errors?.name}
-                                placeholder={"Enter a user name"}
-                            />
-                        }
-                    />
-
-                    <Controller
-                        name="job"
-                        control={control}
-                        render={({ field }) =>
-                            <TextField
-                                {...field}
-                                icon={() => <Ionicons
-                                    name="briefcase-outline"
-                                    size={24}
-                                    color="black"
+                    <InputContainer>
+                        <Controller
+                            name="name"
+                            control={control}
+                            render={({ field }) =>
+                                <TextField
+                                    {...field}
+                                    icon={() => <EvilIcons
+                                        name='user'
+                                        size={mScale(25)}
+                                        color="black"
+                                    />}
+                                    error={errors?.name}
+                                    placeholder={"Enter a user name"}
                                 />
-                                }
-                                error={errors?.job}
-                                placeholder={"Enter a job"}
-                            />
-                        }
+                            }
+                        />
 
-                    />
+                        <Controller
+                            name="job"
+                            control={control}
+                            render={({ field }) =>
+                                <TextField
+                                    {...field}
+                                    icon={() => <Ionicons
+                                        name="briefcase-outline"
+                                        size={24}
+                                        color="black"
+                                    />
+                                    }
+                                    error={errors?.job}
+                                    placeholder={"Enter a job"}
+                                />
+                            }
 
-                </InputContainer>
+                        />
 
-                <ButtonContainer>
-                    <Button
-                        isLoading={isLoading}
-                        label={"Create Account"}
-                        onPress={handleSubmit(onSubmit)}
-                    // isLoading={isSigning}
-                    />
-                </ButtonContainer>
-            </KeyboardArea>
-        </Container>
+                    </InputContainer>
+
+                    <ButtonContainer>
+                        <Button
+                            isLoading={isLoading}
+                            label={"Create Account"}
+                            onPress={handleSubmit(onSubmit)}
+                        />
+                    </ButtonContainer>
+                </KeyboardArea>
+            </Container>
+        </TouchableWithoutFeedback>
+
     )
 }
 
-const Container = styled.View`
-    flex:1;
-    background-color: ${({ color }) => color.white};
-    padding-horizontal:${mScale(60)}px;
-    padding-top: ${({ insets }) => insets.top}px;
-    gap: 30%;
-    align-items: center;
-    justify-content: center;
+const Container = styled(ScrollView).attrs(({ color,insets }) => ({
+    contentContainerStyle: {
+        flex:1,
+        backgroundColor:color.white,
+        paddingHorizontal:mScale(40),
+        paddingTop: insets.top,
+        alignItems: "center",
+        justifyContent: "center",
+        gap: mScale(30)
+    }
+}))`
+  
 `
 
 const InputContainer = styled.View`
@@ -186,6 +192,8 @@ const Image = styled.Image`
 `
 const KeyboardArea = styled.KeyboardAvoidingView`
     height: 100%;
+    flex: 1;
+    width: 100%;
 `
 const TitleView = styled.View`
 `

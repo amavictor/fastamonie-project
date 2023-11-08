@@ -2,7 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const userSlice = createSlice({
 	name: "user",
-	initialState: {details:{}},
+	initialState: {
+		details: {
+			onboard:true
+		},
+		
+	},
 	reducers: {
 		configUser: (state, action) => {
 			state.details = action;

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styled } from 'styled-components/native';
-import { TouchableOpacity } from "react-native"
+import { Keyboard, TouchableOpacity, TouchableWithoutFeedback } from "react-native"
 import { Button, TextField } from '../../Ui_elements';
 import { COLORS, mScale, nScale, vScale, request } from '../../Utilities';
 import { EvilIcons } from '@expo/vector-icons';
@@ -27,13 +27,9 @@ export const LoginScreen = () => {
             email: "",
             password: ""
         },
-        // resolver: yupResolver(AuthSchema)
     })
 
     const [request, { isLoading }] = useLoginMutation()
-
-    // const email = watch("email")
-    // const password = watch("password")
     const onSubmit = async (data) => {
 
         if (data.email === "" || data.password === "") {
@@ -72,70 +68,73 @@ export const LoginScreen = () => {
     }
 
     return (
-        <Container
-            insets={insets}
-            color={COLORS}
-        >
-            <KeyboardArea
-                behavior='padding'
+        <TouchableWithoutFeedback onPress={()=> Keyboard.dismiss()}>
+            <Container
+                insets={insets}
+                color={COLORS}
             >
-                <TitleView>
-                    <TextTitle>Login</TextTitle>
-                    <Text>Hello, welcome back to your account.</Text>
-                </TitleView>
+                <KeyboardArea
+                    behavior='padding'
+                >
+                    <TitleView>
+                        <TextTitle>Login</TextTitle>
+                        <Text>Hello, welcome back to your account.</Text>
+                    </TitleView>
 
-                <Image source={require("../../../assets/password.png")} />
-                <InputContainer>
-                    <Controller
-                        name='email'
-                        control={control}
-                        render={({ field }) =>
-                            <TextField
-                                {...field}
-                                icon={() => <EvilIcons
-                                    name='user'
-                                    size={nScale(25)}
-                                    color="black"
-                                />}
-                                placeholder={"Email"}
-                                errors={errors?.username}
-                            />
-                        }
-                    />
+                    <Image source={require("../../../assets/password.png")} />
+                    <InputContainer>
+                        <Controller
+                            name='email'
+                            control={control}
+                            render={({ field }) =>
+                                <TextField
+                                    {...field}
+                                    icon={() => <EvilIcons
+                                        name='user'
+                                        size={nScale(25)}
+                                        color="black"
+                                    />}
+                                    placeholder={"Email"}
+                                    errors={errors?.username}
+                                />
+                            }
+                        />
 
-                    <Controller
-                        name='password'
-                        control={control}
-                        render={({ field }) =>
-                            <TextField
-                                {...field}
-                                icon={() => <EvilIcons
-                                    name="lock"
-                                    size={nScale(25)}
-                                    color="black"
-                                />}
-                                endIcon={() => <EvilIcons
-                                    name="eye"
-                                    size={nScale(25)}
-                                    color="black"
-                                />}
-                                placeholder={"Password"}
-                                password
-                                errors={errors?.password}
-                            />
-                        }
-                    />
-                </InputContainer>
+                        <Controller
+                            name='password'
+                            control={control}
+                            render={({ field }) =>
+                                <TextField
+                                    {...field}
+                                    icon={() => <EvilIcons
+                                        name="lock"
+                                        size={nScale(25)}
+                                        color="black"
+                                    />}
+                                    endIcon={() => <EvilIcons
+                                        name="eye"
+                                        size={nScale(25)}
+                                        color="black"
+                                    />}
+                                    placeholder={"Password"}
+                                    password
+                                    errors={errors?.password}
+                                />
+                            }
+                        />
+                    </InputContainer>
 
-                <ButtonContainer>
-                    <Button
-                        label={"Login"}
-                        onPress={handleSubmit(onSubmit)}
-                        isLoading={isLoading}
-                    />
-                </ButtonContainer>
-            </KeyboardArea>
-        </Container>
+                    <ButtonContainer>
+                        <Button
+                            label={"Login"}
+                            onPress={handleSubmit(onSubmit)}
+                            isLoading={isLoading}
+                        />
+                    </ButtonContainer>
+                </KeyboardArea>
+            </Container>
+        </TouchableWithoutFeedback>
+
     )
 }
 
@@ -143,12 +142,12 @@ const Container = styled.View`
     flex:1;
     background-color: ${({ color }) => color.white};
     padding-horizontal:${mScale(40)}px;
-    gap: 30%;
+    gap: ${vScale(40)}px;
     padding-top: ${({ insets }) => insets.top}px;
 `
 
 const InputContainer = styled.View`
-    gap: ${vScale(20)}px;
+    gap: ${vScale(40)}px;
     margin-top: ${vScale(60)}px;
 
 `
@@ -176,7 +175,7 @@ const KeyboardArea = styled.KeyboardAvoidingView`
 
 `
 const TitleView = styled.View`
-    margin-top: ${vScale(50)}px;
+    margin-top: ${vScale(100)}px;
 `
 
 const ButtonContainer = styled.View`

@@ -1,4 +1,3 @@
-import axios from "axios"
 import {
     moderateScale,
     scale,
@@ -24,4 +23,5 @@ export const COLORS = {
     blackText: "#000000",
     backdrop:"#faede6"
 }
+
 

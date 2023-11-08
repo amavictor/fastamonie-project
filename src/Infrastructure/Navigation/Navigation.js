@@ -4,7 +4,7 @@ import { AuthNavigation } from './AuthNavigation'
 import { PrivateNavigation } from './PrivateNavigation'
 
 export const Navigation = () => {
-    const user = useSelector((state)=>state.user.details.payload)
+    const user = useSelector((state) => state.user.details.payload)
     return (
         <Container>
           {!user?.token ?  <AuthNavigation />

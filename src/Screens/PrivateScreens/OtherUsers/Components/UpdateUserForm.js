@@ -3,14 +3,16 @@ import { styled } from "styled-components/native"
 import { Controller, useForm } from 'react-hook-form'
 import { Button, TextField } from '../../../../Ui_elements'
 import { mScale } from '../../../../Utilities'
-import { EvilIcons } from '@expo/vector-icons';
+import { EvilIcons, Ionicons } from '@expo/vector-icons';
 import { useUpdateUserMutation } from '../../../../Redux/Services/api';
+import { useToast } from 'react-native-toast-notifications'
 
 export const UpdateUserForm = ({ bottomSheetRef }) => {
 
     const {
         control,
         handleSubmit,
+        setValue,
         formState: { errors }
     } = useForm({
         defaultValues: {
@@ -20,6 +22,7 @@ export const UpdateUserForm = ({ bottomSheetRef }) => {
     })
 
     const [request, { isLoading }] = useUpdateUserMutation()
+    const toast = useToast()
 
     const onSubmit = async (data) => {
         const requestBody = {
@@ -36,8 +39,7 @@ export const UpdateUserForm = ({ bottomSheetRef }) => {
         }
         else {
             const response = await request(requestBody)
-
-            if (response?.data) {
+            if (response) {
                 toast.show("User has been updated", {
                     type: "success",
                     placement: "top",
@@ -78,8 +80,8 @@ export const UpdateUserForm = ({ bottomSheetRef }) => {
                     render={({ field }) =>
                         <TextField
                             {...field}
-                            icon={() => <EvilIcons
-                                name='user'
+                            icon={() => <Ionicons
+                                name='briefcase-outline'
                                 size={mScale(25)}
                                 color="black"
                             />}
@@ -112,6 +114,6 @@ const Container = styled.View`
 const Keyboard = styled.KeyboardAvoidingView`
     flex: 1;
     align-items: center;
-    gap: 20%;
+    gap: ${mScale(30)}px;
     width: 100%;
 `

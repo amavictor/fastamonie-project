@@ -71,7 +71,7 @@ export const AllUsers = () => {
             <Animated.FlatList
                 data={content}
                 contentContainerStyle={{
-                    gap: `${vScale(20)}px`,
+                    gap: vScale(20),
                     width: "100%",
                     // paddingBottom: `${vScale(200)}px`
                 }}
@@ -124,6 +124,7 @@ export const AllUsers = () => {
                 )}
                 scrollEventThrottle={16}
                 onEndReached={handleLoadMore}
+                onEndReachedThreshold={1}
                 ListFooterComponent={
                     isFetching && <ActivityIndicator size="small" color={COLORS.primary} />
                 }
@@ -161,7 +162,7 @@ const Container = styled.View`
     flex:1;
     background-color: ${({ color }) => color.white};
     padding-top: ${({ insets }) => insets.top}px;
-    gap: 30%;
+    /* gap: 30%; */
     align-items: center;
     justify-content: center;
     /* height: 20px; */

@@ -22,6 +22,6 @@ const Container = styled.View`
     flex:1;
     background-color: ${({ color }) => color.white};
     padding-horizontal:${mScale(40)}px;
-    gap: 30%;
+    /* gap: 30%; */
     padding-top: ${({ insets }) => insets.top}px;
 `

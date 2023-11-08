@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { configUser } from "../../Redux/Reducers";
 import { Dimensions, FlatList } from "react-native"
 import { COLORS, mScale } from "../../Utilities";
@@ -12,7 +12,6 @@ export const OnBoardingScreen = ({ navigation }) => {
     const [currentSlideIndex, setCurrentSlideIndex] = useState(0)
     const ref = useRef(null)
     const dispatch = useDispatch()
-    const user = useSelector((state) => state.user.details)
 
     const slides = [
         {
@@ -51,10 +50,9 @@ export const OnBoardingScreen = ({ navigation }) => {
         try {
             // const updatedShowValue = true;
             dispatch(configUser({
-                ...user,
-                onboard: true
+                onboard: false
             }))
-            navigation.navigate("Login");
+            // navigation.navigate("Login");
         } catch (e) {
             console.log("Onboarding couldn't save");
         }

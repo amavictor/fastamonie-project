@@ -62,18 +62,11 @@ export const PrivateNavigation = () => {
                     height: vScale(60),
                     alignItems: "center",
                     justifyContent: "center",
-                    shadowColor: "#000",
-                    shadowOffset: {
-                        width: 1,
-                        height: mScale(10),
-                    },
                     shadowOpacity: 0.1,
-                    shadowRadius: 20,
-                    zIndex: 1,
-                    borderColor: COLORS.lightText,
-                    borderWidth: "1px",
+                    // zIndex: 1,
                     backgroundColor: `transparent`,
                 },
+                tabBarHideOnKeyboard:true,
                 tabBarBackground: () => (
                     <TabBarBackground>
                         <BlurView intensity={100} style={StyleSheet.absoluteFill} />
@@ -106,4 +99,5 @@ const TabBarBackground = styled.View`
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: ${mScale(15)}px;
     overflow: hidden;
+    z-index: -1;
 `

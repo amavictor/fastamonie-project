@@ -35,7 +35,7 @@ const Container = styled.TouchableOpacity`
 const Avatar = styled.Image`
     width: ${mScale(60)}px;
     height: ${mScale(60)}px;
-    border-radius: 50%;
+    border-radius: ${mScale(100)}px;
 `
 
 const Contact = styled.View`
