@@ -35,7 +35,7 @@ export const AuthNavigation = () => {
             }}
         >
             {
-                (user.payload.onboard && user.payload.token === null) &&
+                user.onboard &&
                 <Stack.Screen
                     name='onboard'
                     component={OnBoardingScreen}

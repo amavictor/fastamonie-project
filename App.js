@@ -9,6 +9,7 @@ import { ToastProvider } from 'react-native-toast-notifications';
 
 
 export default function App() {
+  
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
